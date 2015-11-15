@@ -1,0 +1,58 @@
+/* Styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body.master {
+    /* Margin bottom by footer height */
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+.alert-container {
+    margin-top: 20px;
+}
+
+.auth-container {
+    margin-top: 10%;
+}
+
+.help-static {
+    color: #737373 !important;
+}
+
+.consumer-icon {
+    border: 3px solid #eee;
+    border-radius: 100px;
+    padding: 18px;
+    color: #fff;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5bc0de+0,0ebbef+40,337ab7+100 */
+    background: #5bc0de; /* Old browsers */
+    background: -moz-linear-gradient(top,  #5bc0de 0%, #0ebbef 40%, #337ab7 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5bc0de), color-stop(40%,#0ebbef), color-stop(100%,#337ab7)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #5bc0de 0%,#0ebbef 40%,#337ab7 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #5bc0de 0%,#0ebbef 40%,#337ab7 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #5bc0de 0%,#0ebbef 40%,#337ab7 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #5bc0de 0%,#0ebbef 40%,#337ab7 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bc0de', endColorstr='#337ab7',GradientType=0 ); /* IE6-9 */
+}
+
+.consumer-icon.consumer-icon-sm {
+    padding: 14px;
+    margin-right: 10px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    /*background-color: #f5f5f5;*/
+}
+
+.footer p {
+    margin: 20px 0;
+}
