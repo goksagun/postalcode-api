@@ -71,10 +71,12 @@ class ConsumerRepository extends AbstractRepository implements ConsumerInterface
      * @param $apiKey
      * @param $apiSecret
      *
-     * @return mixed
+     * @return bool
      */
     public function verifyApiKeyAndApiSecret($apiKey, $apiSecret)
     {
-        // TODO: Implement verifyApiKeyAndApiSecret() method.
+        return Consumer::where('api_key', $apiKey)
+            ->where('api_secret', $apiSecret)
+            ->exists();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace app\Services;
 
 use App\Consumer;
 use App\Repositories\TokenRepository;
@@ -52,6 +52,17 @@ class TokenService
     public function getExpiredTokenByConsumer(Consumer $consumer)
     {
         return $consumer->token;
+    }
+
+    /**
+     * @param $accessKey
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function checkTokenAccessKeyAndAccessSecret($accessKey, $accessSecret)
+    {
+        return $this->repository->verifyTokenAccessKeyAndAccessSecret($accessKey, $accessSecret);
     }
 
     /**

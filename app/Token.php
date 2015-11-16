@@ -11,7 +11,7 @@ class Token extends Model
 {
     const ACCESS_KEY_LENGTH = 40;
     const ACCESS_SECRET_LENGTH = 45;
-    const TOKEN_EXPIRED = 10; // minutes
+    const TOKEN_EXPIRED = 3600; // minutes
 
     /**
      * The table associated with the model.

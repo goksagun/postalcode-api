@@ -40,6 +40,20 @@ class TokenRepository extends AbstractRepository
     }
 
     /**
+     * @param $accessKey
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function verifyTokenAccessKeyAndAccessSecret($accessKey, $accessSecret)
+    {
+        return Token::where('access_key', $accessKey)
+            ->where('access_secret', $accessSecret)
+            ->where('expired_at', '>=', date('Y-m-d H:i:s'))
+            ->exists();
+    }
+
+    /**
      * @return mixed
      */
     public function generateTokenAttributes()
