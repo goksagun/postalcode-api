@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Repositories;
+namespace App\Repositories;
 
 use App\Consumer;
 use App\Contracts\ConsumerInterface;
@@ -34,7 +34,7 @@ class ConsumerRepository extends AbstractRepository implements ConsumerInterface
     }
 
     /**
-     * @param User  $user
+     * @param User $user
      * @param array $data
      *
      * @return Consumer
