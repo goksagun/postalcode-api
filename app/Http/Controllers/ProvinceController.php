@@ -59,10 +59,6 @@ class ProvinceController extends ApiController
      */
     public function postProvince(Request $request)
     {
-        return [
-            $request->header('x-access-token')
-        ];
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'slug' => 'required',
