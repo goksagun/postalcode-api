@@ -1,9 +1,10 @@
 <?php
 
-namespace app\Repositories;
+namespace App\Repositories;
 
 use App\Consumer;
 use App\Token;
+use Carbon\Carbon;
 
 class TokenRepository extends AbstractRepository
 {
@@ -37,6 +38,20 @@ class TokenRepository extends AbstractRepository
         $consumer->token()->save($token);
 
         return $token;
+    }
+
+    /**
+     * @param $accessKey
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function verifyTokenAccessKeyAndAccessSecret($accessKey, $accessSecret)
+    {
+        return Token::where('access_key', $accessKey)
+            ->where('access_secret', $accessSecret)
+            ->where('expired_at', '>=', Carbon::now())
+            ->exists();
     }
 
     /**

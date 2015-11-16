@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 
 use App\Consumer;
 use App\Repositories\ConsumerRepository;
@@ -82,5 +82,16 @@ class ConsumerService
     public function updateConsumer($id, array $data)
     {
         return $this->repository->update($id, $data);
+    }
+
+    /**
+     * @param $apiKey
+     * @param $apiSecret
+     *
+     * @return bool
+     */
+    public function checkConsumerApiKeyAndApiSecret($apiKey, $apiSecret)
+    {
+        return $this->repository->verifyApiKeyAndApiSecret($apiKey, $apiSecret);
     }
 }

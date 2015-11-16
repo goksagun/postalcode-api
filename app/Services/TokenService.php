@@ -55,6 +55,17 @@ class TokenService
     }
 
     /**
+     * @param $accessKey
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function checkTokenAccessKeyAndAccessSecret($accessKey, $accessSecret)
+    {
+        return $this->repository->verifyTokenAccessKeyAndAccessSecret($accessKey, $accessSecret);
+    }
+
+    /**
      * @param Consumer $consumer
      * @param array    $data
      *

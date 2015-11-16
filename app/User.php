@@ -7,6 +7,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements AuthenticatableContract
@@ -60,5 +61,15 @@ class User extends Model implements AuthenticatableContract
     public function consumers()
     {
         return $this->hasMany('App\Consumer');
+    }
+
+    /**
+     * Get the token for the user.
+     *
+     * @return HasOne
+     */
+    public function token()
+    {
+        return $this->hasOne('App\Token');
     }
 }

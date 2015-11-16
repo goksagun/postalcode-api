@@ -17,6 +17,8 @@ class ProvinceController extends ApiController
      */
     function __construct(ProvinceService $provinceService)
     {
+        $this->middleware('token');
+
         $this->provinceService = $provinceService;
     }
 
