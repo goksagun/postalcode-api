@@ -94,4 +94,15 @@ class ConsumerService
     {
         return $this->repository->verifyApiKeyAndApiSecret($apiKey, $apiSecret);
     }
+
+    /**
+     * @param $apiSecret
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function checkApiSecretAndAccessSecret($apiSecret, $accessSecret)
+    {
+        return $this->repository->verifyApiSecretAndAccessSecret($apiSecret, $accessSecret);
+    }
 }
