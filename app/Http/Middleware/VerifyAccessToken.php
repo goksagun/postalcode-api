@@ -49,7 +49,7 @@ class VerifyAccessToken
         $consumerSecret = $request->header('x-consumer-secret');
 
         if (!$this->consumerService->checkConsumerApiKeyAndApiSecret($consumerKey, $consumerSecret)) {
-            return response('Consumer not vald.', 401);
+            return response('Consumer not valid.', 401);
         }
 
         $accessKey = $request->header('x-access-key');
@@ -57,6 +57,10 @@ class VerifyAccessToken
 
         if (!$this->tokenService->checkTokenAccessKeyAndAccessSecret($accessKey, $accessSecret)) {
             return response('Token expired or not created.', 401);
+        }
+
+        if (!$this->consumerService->checkApiSecretAndAccessSecret($consumerSecret, $accessSecret)) {
+            return response('Authorization failed.', 401);
         }
 
         return $next($request);

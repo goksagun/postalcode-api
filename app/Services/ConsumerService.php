@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace app\Services;
 
 use App\Consumer;
 use App\Repositories\ConsumerRepository;
@@ -93,5 +93,16 @@ class ConsumerService
     public function checkConsumerApiKeyAndApiSecret($apiKey, $apiSecret)
     {
         return $this->repository->verifyApiKeyAndApiSecret($apiKey, $apiSecret);
+    }
+
+    /**
+     * @param $apiSecret
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function checkApiSecretAndAccessSecret($apiSecret, $accessSecret)
+    {
+        return $this->repository->verifyApiSecretAndAccessSecret($apiSecret, $accessSecret);
     }
 }

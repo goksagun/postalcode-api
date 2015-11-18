@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Consumer;
 use App\Contracts\ConsumerInterface;
+use App\Token;
 use App\User;
 
 class ConsumerRepository extends AbstractRepository implements ConsumerInterface
@@ -34,7 +35,7 @@ class ConsumerRepository extends AbstractRepository implements ConsumerInterface
     }
 
     /**
-     * @param User $user
+     * @param User  $user
      * @param array $data
      *
      * @return Consumer
@@ -78,5 +79,37 @@ class ConsumerRepository extends AbstractRepository implements ConsumerInterface
         return Consumer::where('api_key', $apiKey)
             ->where('api_secret', $apiSecret)
             ->exists();
+    }
+
+    /**
+     * @param $apiSecret
+     * @param $accessSecret
+     *
+     * @return bool
+     */
+    public function verifyApiSecretAndAccessSecret($apiSecret, $accessSecret)
+    {
+        $consumer = Consumer::where('api_secret', $apiSecret)->first();
+
+        $token = Token::where('access_secret', $accessSecret)->first();
+
+        if ($consumer && $token) {
+            return $consumer->token->access_secret === $token->access_secret;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $consumerKey
+     * @param $consumerSecret
+     *
+     * @return null|Token
+     */
+    public function getConsumerToken($consumerKey, $consumerSecret)
+    {
+        return Consumer::where('api_key', $consumerKey)
+            ->where('api_secret', $consumerSecret)
+            ->first()->token;
     }
 }
