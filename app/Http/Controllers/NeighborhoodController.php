@@ -31,12 +31,15 @@ class NeighborhoodController extends ApiController
     /**
      * Retrieves all neighborhoods.
      *
+     * @param Request $request
      * @return array
      */
-    public function getAllNeighborhoods()
+    public function getAllNeighborhoods(Request $request)
     {
+        $perPage = $request->get('per_page', 15);
+
         try {
-            $neighborhoods = $this->neighborhoodService->getNeighborhoods();
+            $neighborhoods = $this->neighborhoodService->getNeighborhoods($perPage);
         } catch (ModelNotFoundException $e) {
             return $this->respondNotFound($e->getMessage());
         }

@@ -16,24 +16,25 @@ class NeighborhoodService
     /**
      * @var NeighborhoodRepository
      */
-    protected $repository;
+    protected $neighborhoodRepository;
 
     /**
      * NeighborhoodService constructor.
      *
-     * @param NeighborhoodRepository $repository
+     * @param NeighborhoodRepository $neighborhoodRepository
      */
-    function __construct(NeighborhoodRepository $repository)
+    function __construct(NeighborhoodRepository $neighborhoodRepository)
     {
-        $this->repository = $repository;
+        $this->neighborhoodRepository = $neighborhoodRepository;
     }
 
     /**
+     * @param int $perPage
      * @return array
      */
-    public function getNeighborhoods()
+    public function getNeighborhoods($perPage = 15)
     {
-        $neighborhoods = $this->repository->paginate();
+        $neighborhoods = $this->neighborhoodRepository->paginate($perPage);
 
         if (!$neighborhoods) {
             throw new ModelNotFoundException('The neighborhoods not found');
@@ -48,7 +49,7 @@ class NeighborhoodService
      */
     public function getNeighborhood($id)
     {
-        $neighborhood = $this->repository->findOne($id);
+        $neighborhood = $this->neighborhoodRepository->findOne($id);
 
         if (!$neighborhood) {
             throw new ModelNotFoundException('The neighborhood not found');
@@ -69,7 +70,7 @@ class NeighborhoodService
             'slug' => $request->get('slug'),
         ];
 
-        return $this->repository->create($data);
+        return $this->neighborhoodRepository->create($data);
     }
 
     /**
@@ -78,7 +79,7 @@ class NeighborhoodService
      */
     public function getNeighborhoodSuburbs($id)
     {
-        $neighborhoodSuburbs = $this->repository->findNeighborhoodAllSuburbs($id);
+        $neighborhoodSuburbs = $this->neighborhoodRepository->findNeighborhoodAllSuburbs($id);
 
         if (!$neighborhoodSuburbs) {
             throw new ModelNotFoundException('The neighborhood suburbs not found');

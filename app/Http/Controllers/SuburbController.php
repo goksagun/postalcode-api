@@ -8,32 +8,46 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class SuburbController
+ * @package App\Http\Controllers
+ */
 class SuburbController extends ApiController
 {
-    protected $neighborhoodService;
+    /**
+     * @var SuburbService
+     */
+    protected $suburbService;
 
     /**
-     * @param SuburbService $neighborhoodService
+     * @param SuburbService $suburbService
      */
-    public function __construct(SuburbService $neighborhoodService)
+    public function __construct(SuburbService $suburbService)
     {
-        $this->neighborhoodService = $neighborhoodService;
+        $this->suburbService = $suburbService;
     }
 
     /**
-     * Retrieves all neighborhoods.
+     * Retrieves all suburbs.
      *
+     * @param Request $request
      * @return array
      */
-    public function getAllSuburbs()
+    public function getAllSuburbs(Request $request)
     {
-        $neighborhoods = $this->neighborhoodService->getSuburbs();
+        $perPage = $request->get('per_page', 15);
 
-        return $this->respond($neighborhoods);
+        try {
+            $suburbs = $this->suburbService->getSuburbs($perPage);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
+
+        return $this->respond($suburbs);
     }
 
     /**
-     * Retrieves a specific neighborhood
+     * Retrieves a specific suburb
      *
      * @param $id
      * @return \App\Suburb
@@ -41,16 +55,16 @@ class SuburbController extends ApiController
     public function getSuburb($id)
     {
         try {
-            $neighborhood = $this->neighborhoodService->getSuburb($id);
+            $suburb = $this->suburbService->getSuburb($id);
         } catch (ModelNotFoundException $e) {
             return $this->respondNotFound($e->getMessage());
         }
 
-        return $neighborhood;
+        return $suburb;
     }
 
     /**
-     * Creates a new neighborhood
+     * Creates a new suburb
      *
      * @param Request $request
      * @return \App\Suburb|mixed
@@ -69,6 +83,6 @@ class SuburbController extends ApiController
 
         $this->setStatusCode(Response::HTTP_CREATED);
 
-        return $this->respond($this->neighborhoodService->createSuburb($request));
+        return $this->respond($this->suburbService->createSuburb($request));
     }
 }

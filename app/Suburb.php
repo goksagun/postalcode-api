@@ -45,4 +45,12 @@ class Suburb extends Model
     {
         $this->attributes['slug'] = str_slug($value);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function neighborhood()
+    {
+        return $this->belongsTo('App\Neighborhood');
+    }
 }

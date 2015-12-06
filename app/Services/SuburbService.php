@@ -16,24 +16,25 @@ class SuburbService
     /**
      * @var SuburbRepository
      */
-    protected $repository;
+    protected $suburbRepository;
 
     /**
      * SuburbService constructor.
      *
-     * @param SuburbRepository $repository
+     * @param SuburbRepository $suburbRepository
      */
-    function __construct(SuburbRepository $repository)
+    function __construct(SuburbRepository $suburbRepository)
     {
-        $this->repository = $repository;
+        $this->suburbRepository = $suburbRepository;
     }
 
     /**
+     * @param int $perPage
      * @return array
      */
-    public function getSuburbs()
+    public function getSuburbs($perPage = 15)
     {
-        $suburbs = $this->repository->paginate();
+        $suburbs = $this->suburbRepository->paginate($perPage);
 
         if (!$suburbs) {
             throw new ModelNotFoundException('The suburbs not found');
@@ -48,7 +49,7 @@ class SuburbService
      */
     public function getSuburb($id)
     {
-        $suburb = $this->repository->findOne($id);
+        $suburb = $this->suburbRepository->findOne($id);
 
         if (!$suburb) {
             throw new ModelNotFoundException('The suburb not found');
@@ -69,6 +70,6 @@ class SuburbService
             'slug' => $request->get('slug'),
         ];
 
-        return $this->repository->create($data);
+        return $this->suburbRepository->create($data);
     }
 }

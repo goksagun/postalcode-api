@@ -6,8 +6,15 @@ namespace App\Repositories;
 use App\Contracts\DistrictInterface;
 use App\District;
 
+/**
+ * Class DistrictRepository
+ * @package App\Repositories
+ */
 class DistrictRepository extends AbstractRepository implements DistrictInterface
 {
+    /**
+     * @var District
+     */
     protected $model;
 
     /**
@@ -27,5 +34,14 @@ class DistrictRepository extends AbstractRepository implements DistrictInterface
     public function findDistrictAllNeighborhoods($id)
     {
         return $this->model->with('neighborhoods')->find($id);
+    }
+
+    /**
+     * @param $perPage
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function findAllDistrictsWithProvinceAndPaginate($perPage = 15)
+    {
+        return $this->model->with('province')->paginate($perPage);
     }
 }

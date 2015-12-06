@@ -41,12 +41,15 @@ class ProvinceController extends ApiController
     /**
      * Retrieves a list of provinces
      *
+     * @param Request $request
      * @return array
      */
-    public function getAllProvinces()
+    public function getAllProvinces(Request $request)
     {
+        $perPage = $request->get('per_page', 15);
+
         try {
-            $provinces = $this->provinceService->getProvinces();
+            $provinces = $this->provinceService->getProvinces($perPage);
         } catch (ModelNotFoundException $e) {
             return $this->respondNotFound($e->getMessage());
         }

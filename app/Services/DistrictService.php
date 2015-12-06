@@ -7,26 +7,34 @@ use App\Repositories\DistrictRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class DistrictService
+ * @package App\Services
+ */
 class DistrictService
 {
-    protected $repository;
+    /**
+     * @var DistrictRepository
+     */
+    protected $districtRepository;
 
     /**
      * DistrictService constructor.
      *
-     * @param DistrictRepository $repository
+     * @param DistrictRepository $districtRepository
      */
-    function __construct(DistrictRepository $repository)
+    function __construct(DistrictRepository $districtRepository)
     {
-        $this->repository = $repository;
+        $this->districtRepository = $districtRepository;
     }
 
     /**
+     * @param int $perPage
      * @return array
      */
-    public function getDistricts()
+    public function getDistricts($perPage = 15)
     {
-        $districts = $this->repository->paginate();
+        $districts = $this->districtRepository->paginate($perPage);
 
         if (!$districts) {
             throw new ModelNotFoundException('The districts not found');
@@ -41,7 +49,7 @@ class DistrictService
      */
     public function getDistrict($id)
     {
-        $district = $this->repository->findOne($id);
+        $district = $this->districtRepository->findOne($id);
 
         if (!$district) {
             throw new ModelNotFoundException('The district not found');
@@ -62,7 +70,7 @@ class DistrictService
             'slug' => $request->get('slug'),
         ];
 
-        return $this->repository->create($data);
+        return $this->districtRepository->create($data);
     }
 
     /**
@@ -71,7 +79,7 @@ class DistrictService
      */
     public function existsDistrict($id)
     {
-        return $this->repository->exists($id);
+        return $this->districtRepository->exists($id);
     }
 
     /**
@@ -80,7 +88,7 @@ class DistrictService
      */
     public function getDistrictNeighborhoods($id)
     {
-        $districtNeighborhoods = $this->repository->findDistrictAllNeighborhoods($id);
+        $districtNeighborhoods = $this->districtRepository->findDistrictAllNeighborhoods($id);
 
         if (!$districtNeighborhoods) {
             throw new ModelNotFoundException('The district neighborhoods not found');

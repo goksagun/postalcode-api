@@ -28,11 +28,12 @@ class ProvinceService
     }
 
     /**
+     * @param int $perPage
      * @return array
      */
-    public function getProvinces()
+    public function getProvinces($perPage = 15)
     {
-        $provinces = $this->provinceRepository->paginate();
+        $provinces = $this->provinceRepository->paginate($perPage);
 
         if (!$provinces) {
             throw new ModelNotFoundException('Provinces not found');
