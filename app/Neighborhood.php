@@ -47,6 +47,14 @@ class Neighborhood extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function district()
+    {
+        return $this->belongsTo('App\District');
+    }
+
+    /**
      * Get the suburbs for the suburb.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
