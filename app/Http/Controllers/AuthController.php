@@ -18,20 +18,13 @@ class AuthController extends Controller
     protected $userService;
 
     /**
-     * @var ConsumerService
-     */
-    protected $consumerService;
-
-    /**
      * AuthController constructor.
      *
      * @param UserService $userService
-     * @param ConsumerService $consumerService
      */
-    public function __construct(UserService $userService, ConsumerService $consumerService)
+    public function __construct(UserService $userService)
     {
         $this->userService = $userService;
-        $this->consumerService = $consumerService;
     }
 
     /**
@@ -56,7 +49,13 @@ class AuthController extends Controller
 
         $this->validate($request, $rules);
 
-        if (!$this->userService->createUser($request->only(['name', 'email', 'password']))) {
+        $credentials = [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+        ];
+
+        if (!$this->userService->createUser($credentials)) {
             $request->session()->flash('alert.warning', 'Something went wrong, please try again later!');
         }
 

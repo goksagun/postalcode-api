@@ -37,17 +37,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password'];
 
     /**
-     * Set the user's password hash.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
-    /**
      * Get the consumers for the user.
      *
      * @return HasMany
