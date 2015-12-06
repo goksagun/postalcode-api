@@ -37,12 +37,12 @@ class UserService
      */
     public function createUser(array $data)
     {
-        return $this->repository->createUser($data);
+        return $this->repository->create($data);
     }
 
     /**
      * @param $id
-     * @return mixed
+     * @return User|mixed
      */
     public function getUser($id)
     {
@@ -50,7 +50,16 @@ class UserService
     }
 
     /**
-     * @return mixed
+     * @param $email
+     * @return User|mixed
+     */
+    public function getUserByEmail($email)
+    {
+        return $this->repository->findOneByEmail($email);
+    }
+
+    /**
+     * @return User|mixed
      */
     public function getAuthUser()
     {

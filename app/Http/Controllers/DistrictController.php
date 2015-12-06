@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 
 use App\Services\DistrictService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class DistrictController
+ * @package App\Http\Controllers
+ */
 class DistrictController extends ApiController
 {
+    /**
+     * @var DistrictService
+     */
     protected $districtService;
 
     /**
@@ -24,9 +32,13 @@ class DistrictController extends ApiController
      *
      * @return array
      */
-    public function getAllDistrict()
+    public function getAllDistricts()
     {
-        $districts = $this->districtService->getAllDistricts();
+        try {
+            $districts = $this->districtService->getDistricts();
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
 
         return $this->respond($districts);
     }
@@ -39,10 +51,10 @@ class DistrictController extends ApiController
      */
     public function getDistrict($id)
     {
-        $district = $this->districtService->getDistrictById($id);
-
-        if (!$district) {
-            return $this->respondNotFound('The district not found');
+        try {
+            $district = $this->districtService->getDistrict($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
         }
 
         return $district;
@@ -79,6 +91,12 @@ class DistrictController extends ApiController
      */
     public function getDistrictNeighborhoods($id)
     {
-        return $this->respond($this->districtService->getDistrictAllNeighborhoods($id));
+        try {
+            $districtNeighborhoods = $this->districtService->getDistrictNeighborhoods($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
+
+        return $this->respond($districtNeighborhoods);
     }
 }

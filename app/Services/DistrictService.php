@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Repositories\DistrictRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class DistrictService
@@ -23,18 +24,30 @@ class DistrictService
     /**
      * @return array
      */
-    public function getAllDistricts()
+    public function getDistricts()
     {
-        return $this->repository->findAll();
+        $districts = $this->repository->paginate();
+
+        if (!$districts) {
+            throw new ModelNotFoundException('The districts not found');
+        }
+
+        return $districts;
     }
 
     /**
      * @param $id
      * @return \App\District
      */
-    public function getDistrictById($id)
+    public function getDistrict($id)
     {
-        return $this->repository->findOne($id);
+        $district = $this->repository->findOne($id);
+
+        if (!$district) {
+            throw new ModelNotFoundException('The district not found');
+        }
+
+        return $district;
     }
 
     /**
@@ -56,8 +69,23 @@ class DistrictService
      * @param $id
      * @return mixed
      */
-    public function getDistrictAllNeighborhoods($id)
+    public function existsDistrict($id)
     {
-        return $this->repository->findDistrictAllNeighborhoods($id);
+        return $this->repository->exists($id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getDistrictNeighborhoods($id)
+    {
+        $districtNeighborhoods = $this->repository->findDistrictAllNeighborhoods($id);
+
+        if (!$districtNeighborhoods) {
+            throw new ModelNotFoundException('The district neighborhoods not found');
+        }
+
+        return $districtNeighborhoods;
     }
 }

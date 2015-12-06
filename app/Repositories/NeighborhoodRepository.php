@@ -6,8 +6,15 @@ namespace App\Repositories;
 use App\Contracts\NeighborhoodInterface;
 use App\Neighborhood;
 
+/**
+ * Class NeighborhoodRepository
+ * @package App\Repositories
+ */
 class NeighborhoodRepository extends AbstractRepository implements NeighborhoodInterface
 {
+    /**
+     * @var Neighborhood
+     */
     protected $model;
 
     /**

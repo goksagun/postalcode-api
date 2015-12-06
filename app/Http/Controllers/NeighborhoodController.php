@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 
 use App\Services\NeighborhoodService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class NeighborhoodController
+ * @package App\Http\Controllers
+ */
 class NeighborhoodController extends ApiController
 {
+    /**
+     * @var NeighborhoodService
+     */
     protected $neighborhoodService;
 
     /**
@@ -25,9 +33,13 @@ class NeighborhoodController extends ApiController
      *
      * @return array
      */
-    public function getAllNeighborhood()
+    public function getAllNeighborhoods()
     {
-        $neighborhoods = $this->neighborhoodService->getAllNeighborhoods();
+        try {
+            $neighborhoods = $this->neighborhoodService->getNeighborhoods();
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
 
         return $this->respond($neighborhoods);
     }
@@ -40,10 +52,10 @@ class NeighborhoodController extends ApiController
      */
     public function getNeighborhood($id)
     {
-        $neighborhood = $this->neighborhoodService->getNeighborhoodById($id);
-
-        if (!$neighborhood) {
-            return $this->respondNotFound('The neighborhood not found');
+        try {
+            $neighborhood = $this->neighborhoodService->getNeighborhood($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
         }
 
         return $neighborhood;
@@ -80,6 +92,11 @@ class NeighborhoodController extends ApiController
      */
     public function getNeighborhoodSuburbs($id)
     {
-        return $this->respond($this->neighborhoodService->getNeighborhoodAllSuburbs($id));
+        try {
+            $neighborhoodSuburbs = $this->neighborhoodService->getNeighborhoodSuburbs($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
+        return $this->respond($neighborhoodSuburbs);
     }
 }

@@ -4,10 +4,18 @@ namespace App\Services;
 
 
 use App\Repositories\NeighborhoodRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class NeighborhoodService
+ * @package App\Services
+ */
 class NeighborhoodService
 {
+    /**
+     * @var NeighborhoodRepository
+     */
     protected $repository;
 
     /**
@@ -23,18 +31,30 @@ class NeighborhoodService
     /**
      * @return array
      */
-    public function getAllNeighborhoods()
+    public function getNeighborhoods()
     {
-        return $this->repository->findAll();
+        $neighborhoods = $this->repository->paginate();
+
+        if (!$neighborhoods) {
+            throw new ModelNotFoundException('The neighborhoods not found');
+        }
+
+        return $neighborhoods;
     }
 
     /**
      * @param $id
      * @return \App\Neighborhood
      */
-    public function getNeighborhoodById($id)
+    public function getNeighborhood($id)
     {
-        return $this->repository->findOne($id);
+        $neighborhood = $this->repository->findOne($id);
+
+        if (!$neighborhood) {
+            throw new ModelNotFoundException('The neighborhood not found');
+        }
+
+        return $neighborhood;
     }
 
     /**
@@ -56,8 +76,14 @@ class NeighborhoodService
      * @param $id
      * @return mixed
      */
-    public function getNeighborhoodAllSuburbs($id)
+    public function getNeighborhoodSuburbs($id)
     {
-        return $this->repository->findNeighborhoodAllSuburbs($id);
+        $neighborhoodSuburbs = $this->repository->findNeighborhoodAllSuburbs($id);
+
+        if (!$neighborhoodSuburbs) {
+            throw new ModelNotFoundException('The neighborhood suburbs not found');
+        }
+
+        return $neighborhoodSuburbs;
     }
 }

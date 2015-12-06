@@ -31,26 +31,32 @@ $app->post('auth/register', 'AuthController@postRegister');
 $app->post('auth/login', 'AuthController@postLogin');
 $app->get('auth/logout', 'AuthController@getLogout');
 
+$app->get('password/email', 'PasswordController@getEmail');
+$app->post('password/email', 'PasswordController@postEmail');
+
+$app->get('password/reset/{token}', 'PasswordController@getReset');
+$app->post('password/reset/{token}', 'PasswordController@postReset');
+
 $app->group(['prefix' => 'api'], function (Laravel\Lumen\Application $app) {
     $app->get('provinces', 'App\Http\Controllers\ProvinceController@getAllProvinces');
-    $app->get('province/{id}', 'App\Http\Controllers\ProvinceController@getProvince');
-    $app->post('province', 'App\Http\Controllers\ProvinceController@postProvince');
-    $app->put('province/{id}', 'App\Http\Controllers\ProvinceController@putProvince');
-    $app->delete('province/{id}', 'App\Http\Controllers\ProvinceController@deleteProvince');
-    $app->get('province/{id}/districts', 'App\Http\Controllers\ProvinceController@getProvinceDistricts');
+    $app->get('provinces/{id}', 'App\Http\Controllers\ProvinceController@getProvince');
+    $app->post('provinces', 'App\Http\Controllers\ProvinceController@postProvince');
+    $app->put('provinces/{id}', 'App\Http\Controllers\ProvinceController@putProvince');
+    $app->delete('provinces/{id}', 'App\Http\Controllers\ProvinceController@deleteProvince');
+    $app->get('provinces/{id}/districts', 'App\Http\Controllers\ProvinceController@getProvinceDistricts');
 
-    $app->get('districts', 'App\Http\Controllers\DistrictController@getAllDistrict');
-    $app->get('district/{id}', 'App\Http\Controllers\DistrictController@getDistrict');
-    $app->post('district', 'App\Http\Controllers\DistrictController@postDistrict');
-    $app->get('district/{id}/neighborhoods', 'App\Http\Controllers\DistrictController@getDistrictNeighborhoods');
+    $app->get('districts', 'App\Http\Controllers\DistrictController@getAllDistricts');
+    $app->get('districts/{id}', 'App\Http\Controllers\DistrictController@getDistrict');
+    $app->post('districts', 'App\Http\Controllers\DistrictController@postDistrict');
+    $app->get('districts/{id}/neighborhoods', 'App\Http\Controllers\DistrictController@getDistrictNeighborhoods');
 
-    $app->get('neighborhoods', 'App\Http\Controllers\NeighborhoodController@getAllNeighborhood');
-    $app->get('neighborhood/{id}', 'App\Http\Controllers\NeighborhoodController@getNeighborhood');
-    $app->post('neighborhood', 'App\Http\Controllers\NeighborhoodController@postNeighborhood');
-    $app->get('neighborhood/{id}/suburbs', 'App\Http\Controllers\NeighborhoodController@getNeighborhoodSuburbs');
+    $app->get('neighborhoods', 'App\Http\Controllers\NeighborhoodController@getAllNeighborhoods');
+    $app->get('neighborhoods/{id}', 'App\Http\Controllers\NeighborhoodController@getNeighborhood');
+    $app->post('neighborhoods', 'App\Http\Controllers\NeighborhoodController@postNeighborhood');
+    $app->get('neighborhoods/{id}/suburbs', 'App\Http\Controllers\NeighborhoodController@getNeighborhoodSuburbs');
 
-    $app->get('suburbs', 'App\Http\Controllers\SuburbController@getAllSuburb');
-    $app->get('suburb/{id}', 'App\Http\Controllers\SuburbController@getSuburb');
-    $app->post('suburb', 'App\Http\Controllers\SuburbController@postSuburb');
+    $app->get('suburbs', 'App\Http\Controllers\SuburbController@getAllSuburbs');
+    $app->get('suburbs/{id}', 'App\Http\Controllers\SuburbController@getSuburb');
+    $app->post('suburbs', 'App\Http\Controllers\SuburbController@postSuburb');
 });
 

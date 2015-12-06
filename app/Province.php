@@ -29,6 +29,13 @@ class Province extends Model
     protected $fillable = ['name', 'slug'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
      * Set the model slug.
      *
      * @param $value

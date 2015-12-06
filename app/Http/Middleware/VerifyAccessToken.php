@@ -41,16 +41,16 @@ class VerifyAccessToken
      */
     public function handle($request, Closure $next)
     {
-        if (is_null($request->request->has('x-auth-secret'))) {
+        if (is_null($request->request->has('x-access-secret'))) {
             return response('Unauthorized.', 401);
         }
 
-        $consumerKey = $request->header('x-consumer-key');
-        $consumerSecret = $request->header('x-consumer-secret');
-
-        if (!$this->consumerService->checkConsumerApiKeyAndApiSecret($consumerKey, $consumerSecret)) {
-            return response('Consumer not valid.', 401);
-        }
+//        $consumerKey = $request->header('x-consumer-key');
+//        $consumerSecret = $request->header('x-consumer-secret');
+//
+//        if (!$this->consumerService->checkConsumerApiKeyAndApiSecret($consumerKey, $consumerSecret)) {
+//            return response('Consumer not valid.', 401);
+//        }
 
         $accessKey = $request->header('x-access-key');
         $accessSecret = $request->header('x-access-secret');
@@ -59,9 +59,9 @@ class VerifyAccessToken
             return response('Token expired or not created.', 401);
         }
 
-        if (!$this->consumerService->checkApiSecretAndAccessSecret($consumerSecret, $accessSecret)) {
-            return response('Authorization failed.', 401);
-        }
+//        if (!$this->consumerService->checkApiSecretAndAccessSecret($consumerSecret, $accessSecret)) {
+//            return response('Authorization failed.', 401);
+//        }
 
         return $next($request);
     }

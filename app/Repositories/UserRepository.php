@@ -6,7 +6,7 @@ namespace App\Repositories;
 use App\Contracts\UserInterface;
 use App\User;
 
-class UserRepository extends AbstractRepository implements UserInterface
+class UserRepository extends AbstractRepository
 {
     /**
      * @var User
@@ -26,14 +26,14 @@ class UserRepository extends AbstractRepository implements UserInterface
     }
 
     /**
-     * Create a new user it's credentials.
+     * Find user by email.
      *
-     * @param array $data
+     * @param $email
      * @return User|mixed
      */
-    public function createUser(array $data)
+    public function findOneByEmail($email)
     {
-        $user = $this->model->create($data);
+        $user = $this->model->where('email', '=', $email)->first();
 
         return $user;
     }

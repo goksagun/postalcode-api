@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Services\SuburbService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,9 +25,9 @@ class SuburbController extends ApiController
      *
      * @return array
      */
-    public function getAllSuburb()
+    public function getAllSuburbs()
     {
-        $neighborhoods = $this->neighborhoodService->getAllSuburbs();
+        $neighborhoods = $this->neighborhoodService->getSuburbs();
 
         return $this->respond($neighborhoods);
     }
@@ -39,10 +40,10 @@ class SuburbController extends ApiController
      */
     public function getSuburb($id)
     {
-        $neighborhood = $this->neighborhoodService->getSuburbById($id);
-
-        if (!$neighborhood) {
-            return $this->respondNotFound('The neighborhood not found');
+        try {
+            $neighborhood = $this->neighborhoodService->getSuburb($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->respondNotFound($e->getMessage());
         }
 
         return $neighborhood;
@@ -69,16 +70,5 @@ class SuburbController extends ApiController
         $this->setStatusCode(Response::HTTP_CREATED);
 
         return $this->respond($this->neighborhoodService->createSuburb($request));
-    }
-
-    /**
-     * Retrieves a specific neighborhood all neighborhoods
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function getSuburbSuburbs($id)
-    {
-        return $this->respond($this->neighborhoodService->getSuburbAllSuburbs($id));
     }
 }

@@ -28,7 +28,7 @@
                             {!! $errors->first('email_confirmation', '<span class="help-block">:message</span>') !!}
                         </div>
                         <div class="{{ $errors->has('password') ? 'form-group has-error' : 'form-group' }}">
-                            <label for="password">Password <a href="/auth/forgot-password">(forgot
+                            <label for="password">Password <a href="/password/email">(forgot
                                     password)</a></label>
                             <input type="password" name="password" class="form-control"
                                    id="password" placeholder="Password">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <a href="/auth/login">Sing in</a>
-            <a href="/auth/forgot-password" class="pull-right">Forgot password</a>
+            <a href="/password/email" class="pull-right">Forgot password</a>
         </div>
     </div>
 
