@@ -33,7 +33,7 @@ class Suburb extends Model
      *
      * @var array
      */
-    protected $hidden = ['neighborhood_id'];
+    protected $hidden = ['neighborhood_id', 'created_at', 'updated_at'];
 
     /**
      * Set the model slug.

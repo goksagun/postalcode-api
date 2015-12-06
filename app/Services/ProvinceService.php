@@ -3,36 +3,57 @@
 namespace App\Services;
 
 
+use App\Repositories\DistrictRepository;
 use App\Repositories\ProvinceRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class ProvinceService
+ * @package App\Services
+ */
 class ProvinceService
 {
-    protected $repository;
+    /**
+     * @var ProvinceRepository
+     */
+    protected $provinceRepository;
 
     /**
-     * @param ProvinceRepository $repository
+     * @param ProvinceRepository $provinceRepository
      */
-    function __construct(ProvinceRepository $repository)
+    function __construct(ProvinceRepository $provinceRepository)
     {
-        $this->repository = $repository;
+        $this->provinceRepository = $provinceRepository;
     }
 
     /**
      * @return array
      */
-    public function getAllProvinces()
+    public function getProvinces()
     {
-        return $this->repository->findAll();
+        $provinces = $this->provinceRepository->paginate();
+
+        if (!$provinces) {
+            throw new ModelNotFoundException('Provinces not found');
+        }
+
+        return $provinces;
     }
 
     /**
      * @param $id
      * @return \App\Province
      */
-    public function getProvinceById($id)
+    public function getProvince($id)
     {
-        return $this->repository->findOne($id);
+        $province = $this->provinceRepository->findOne($id);
+
+        if (!$province) {
+            throw new ModelNotFoundException('The province not found');
+        }
+
+        return $province;
     }
 
     /**
@@ -46,7 +67,7 @@ class ProvinceService
             'slug' => $request->get('slug'),
         ];
 
-        return $this->repository->create($data);
+        return $this->provinceRepository->create($data);
     }
 
     /**
@@ -61,7 +82,7 @@ class ProvinceService
             'slug' => $request->get('slug'),
         ];
 
-        return $this->repository->update($id, $data);
+        return $this->provinceRepository->update($id, $data);
     }
 
     /**
@@ -70,7 +91,7 @@ class ProvinceService
      */
     public function deleteProvince($id)
     {
-        return $this->repository->delete($id);
+        return $this->provinceRepository->delete($id);
     }
 
     /**
@@ -79,15 +100,21 @@ class ProvinceService
      */
     public function existsProvince($id)
     {
-        return $this->repository->exists($id);
+        return $this->provinceRepository->exists($id);
     }
 
     /**
      * @param $id
      * @return mixed
      */
-    public function getProvinceAllDistricts($id)
+    public function getProvinceDistricts($id)
     {
-        return $this->repository->findProvinceAllDistricts($id);
+        $provinceDistricts = $this->provinceRepository->findProvinceAllDistricts($id);
+
+        if (!$provinceDistricts) {
+            throw new ModelNotFoundException('Province districts not found');
+        }
+
+        return $provinceDistricts;
     }
 }

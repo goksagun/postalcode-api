@@ -6,8 +6,15 @@ namespace App\Repositories;
 use App\Contracts\SuburbInterface;
 use App\Suburb;
 
+/**
+ * Class SuburbRepository
+ * @package App\Repositories
+ */
 class SuburbRepository extends AbstractRepository implements SuburbInterface
 {
+    /**
+     * @var Suburb
+     */
     protected $model;
 
     /**

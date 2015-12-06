@@ -4,10 +4,18 @@ namespace App\Services;
 
 
 use App\Repositories\SuburbRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class SuburbService
+ * @package App\Services
+ */
 class SuburbService
 {
+    /**
+     * @var SuburbRepository
+     */
     protected $repository;
 
     /**
@@ -23,18 +31,30 @@ class SuburbService
     /**
      * @return array
      */
-    public function getAllSuburbs()
+    public function getSuburbs()
     {
-        return $this->repository->findAll();
+        $suburbs = $this->repository->paginate();
+
+        if (!$suburbs) {
+            throw new ModelNotFoundException('The suburbs not found');
+        }
+
+        return $suburbs;
     }
 
     /**
      * @param $id
      * @return \App\Suburb
      */
-    public function getSuburbById($id)
+    public function getSuburb($id)
     {
-        return $this->repository->findOne($id);
+        $suburb = $this->repository->findOne($id);
+
+        if (!$suburb) {
+            throw new ModelNotFoundException('The suburb not found');
+        }
+
+        return $suburb;
     }
 
     /**

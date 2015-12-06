@@ -28,22 +28,4 @@ class ProvinceRepository extends AbstractRepository implements ProvinceInterface
     {
         return $this->model->with('districts')->find($id);
     }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function exists($id)
-    {
-        return $this->model->whereId($id)->exists();
-    }
-
-    /**
-     * @param $id
-     * @return int
-     */
-    public function delete($id)
-    {
-        return $this->model->destroy($id);
-    }
 }

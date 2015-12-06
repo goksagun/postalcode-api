@@ -33,7 +33,7 @@ class Neighborhood extends Model
      *
      * @var array
      */
-    protected $hidden = ['district_id'];
+    protected $hidden = ['district_id', 'created_at', 'updated_at'];
 
     /**
      * Set the model slug.

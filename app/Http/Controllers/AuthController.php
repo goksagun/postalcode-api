@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Services\ConsumerService;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,16 +17,21 @@ class AuthController extends Controller
      */
     protected $userService;
 
+    /**
+     * @var ConsumerService
+     */
     protected $consumerService;
 
     /**
      * AuthController constructor.
      *
      * @param UserService $userService
+     * @param ConsumerService $consumerService
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ConsumerService $consumerService)
     {
         $this->userService = $userService;
+        $this->consumerService = $consumerService;
     }
 
     /**
