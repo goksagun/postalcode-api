@@ -30,12 +30,15 @@ class DistrictController extends ApiController
     /**
      * Retrieves all districts.
      *
+     * @param Request $request
      * @return array
      */
-    public function getAllDistricts()
+    public function getAllDistricts(Request $request)
     {
+        $perPage = $request->get('per_page', 15);
+
         try {
-            $districts = $this->districtService->getDistricts();
+            $districts = $this->districtService->getDistricts($perPage);
         } catch (ModelNotFoundException $e) {
             return $this->respondNotFound($e->getMessage());
         }
